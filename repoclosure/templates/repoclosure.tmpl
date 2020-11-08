@@ -1,0 +1,62 @@
+#from .layout import layout
+#extends layout
+#def mainContent()
+<div class="row">
+  <div class="col">
+    #if $code == -1
+      <p>
+        An exception occured, while executing repoclosure for this repository:
+        <pre>$errors</pre>
+      </p>
+    #else
+      #if $code == 0
+        <p>
+          Repoclosure ended with exit code 0.
+        </p>
+      #else
+        <p>
+          Repoclosure ended with exit code ${code}, stderr:
+          <pre>$errors</pre>
+        </p>
+      #end if
+      <p>
+        $count out of ${total_count}(${percent}%) packages have unresolved dependencies.
+      </p>
+      <table class="table table-hover table-sm table-bordered">
+        <thead class="thead-light">
+          <th scope="col">#</th>
+          <th scope="col">Package</th>
+          <th scope="col">SRPM</th>
+          <th scope="col">Uresolved dependencies</th>
+        </thead>
+        <tbody>
+          #set $cnt = 1
+          #for $nevra, $src, $unresolved in $bad_packages
+            <tr>
+              <th scope="row">$cnt</th>
+              <td>$nevra</td>
+              <td>$src</td>
+              <td>
+                <pre>$unresolved</pre>
+              </td>
+            </tr>
+            #set $cnt = $cnt + 1
+          #end for
+        </tbody>
+      </table>
+    #end if
+  </div>
+</div>
+#end def
+#def links
+<ul class="navbar-nav">
+  <li class="nav-item">
+    <a class="nav-link" href="index.html">Index</a>
+  </li>
+  #if $code != -1
+    <li class="nav-item">
+      <a class="nav-link" href="$compressed">Compressed report</a>
+    </li>
+  #end if
+</ul>
+#end def

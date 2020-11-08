@@ -1,0 +1,44 @@
+#from .layout import layout
+#extends layout
+#def mainContent()
+  #for $platform in $platforms
+    #set $counter = $counters[$platform]
+    <div class="row">
+      #for $type in $counter.types
+        <div class="col">
+          <h4>$platform-$type</h4>
+          <table class="table table-sm table-bordered">
+            <tr>
+              <th></th>
+              #for $repository in $counter.repositories
+                <td>$repository</td>
+              #end for
+            </tr>
+            #for $arch in $counter.arches
+              <tr>
+                <td>$arch</td>
+                #for $repository in $counter.repositories
+                  #set $key = "%s#%s#%s" % ($type, $repository, $arch)
+                  #set $count = $counter.counts[$key]
+                  #if $count == 0
+                    <td>$count</td>
+                  #elif $count > 0 or $count == -1
+                    #set $link = "%s-%s-%s_%s.html" % ($platform, $arch, $repository, $type)
+                    #if $count == -1
+                      <td><a href="$link">Error</a></td>
+                    #else
+                      <td><a href="$link">$count</a></td>
+                    #end if
+                  #end if
+                #end for
+              </tr>
+            #end for
+          </table>
+        </div>
+      #end for
+    </div>
+  #end for
+#end def
+#def rightTitle()
+  <h5>Generated on $generated_on in $generated_in</h5>
+#end def

@@ -1,0 +1,12 @@
+.navbar-inverse {
+  background-color: #3E73A2;
+  border-color: #35628a;
+}
+.navbar-inverse .navbar-nav>li>a {
+  color: #FFF;
+}
+td.no-packages {
+  vertical-align: middle;
+  text-align: center;
+  height: 300px;
+}
