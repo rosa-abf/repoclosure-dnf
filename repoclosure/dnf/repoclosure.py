@@ -53,7 +53,13 @@ def run_repoclosure(platform, repository, arch, type):
     processed = process_repoclosure_output(output)
     srpm = get_srpm_for_platform(platform, repository, arch, type)
     if 'return_code' in srpm:
-      return srpm
+      empty_return = {
+        'report': [],
+        'count': 0,
+        'total_count': 0,
+        'percent': 0
+      }
+      return {**srpm, **empty_return}
     report = []
     for package in processed:
       srpm_col = "N/A"
