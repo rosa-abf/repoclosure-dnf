@@ -4,6 +4,8 @@ RUN dnf --nogpgcheck --refresh --assumeyes --nodocs --setopt=install_weak_deps=F
  && rm -f /etc/localtime \
  && ln -s /usr/share/zoneinfo/UTC /etc/localtime \
  && dnf --nogpgcheck --assumeyes --nodocs --setopt=install_weak_deps=False install dnf-utils rosa-repos \
+ && dnf --nogpgcheck --assumeyes --nodocs --setopt=install_weak_deps=False install make python3egg\(pip\) \
+ && pip3 install cheetah3 \
  && dnf autoremove --assumeyes \
  && dnf clean all \
  && rm -rf /var/cache/dnf/* \
@@ -11,9 +13,7 @@ RUN dnf --nogpgcheck --refresh --assumeyes --nodocs --setopt=install_weak_deps=F
  && rm -rf /var/lib/dnf/history/* \
  && rm -rf /tmp/* \
  && rm -rf /var/lib/rpm/__db.* \
- && rm -rf /usr/share/man/ /usr/share/cracklib /usr/share/doc \
- && dnf install make python3egg\(pip\) \
- && pip3 install cheetah3
+ && rm -rf /usr/share/man/ /usr/share/cracklib /usr/share/doc
 
 WORKDIR /repoclosure
 COPY repoclosure.py ./
