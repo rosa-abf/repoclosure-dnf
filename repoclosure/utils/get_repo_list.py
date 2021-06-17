@@ -15,12 +15,18 @@ def get_repo_list(platform, repository, arch, type, srpm_list = False):
     return [get_item(platform, repository, arch, type)]
 
   repo_list.append(get_item(platform, 'main', arch, 'release'))
-  repo_list.append(get_item(platform, 'main', arch, 'updates'))
+  if type == 'updates':
+    repo_list.append(get_item(platform, 'main', arch, 'updates'))
+  if type == 'testing':
+    repo_list.append(get_item(platform, 'main', arch, 'testing'))
 
   if repository == 'main':
     return repo_list
 
   repo_list.append(get_item(platform, repository, arch, 'release'))
-  repo_list.append(get_item(platform, repository, arch, 'updates'))
+  if type == 'updates':
+    repo_list.append(get_item(platform, repository, arch, 'updates'))
+  if type == 'testing':
+    repo_list.append(get_item(platform, repository, arch, 'testing'))
 
   return repo_list
