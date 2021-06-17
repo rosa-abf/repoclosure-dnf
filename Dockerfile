@@ -4,8 +4,7 @@ RUN dnf --nogpgcheck --refresh --assumeyes --nodocs --setopt=install_weak_deps=F
  && rm -f /etc/localtime \
  && ln -s /usr/share/zoneinfo/UTC /etc/localtime \
  && dnf --nogpgcheck --assumeyes --nodocs --setopt=install_weak_deps=False install dnf-utils rosa-repos \
- && dnf --nogpgcheck --assumeyes --nodocs --setopt=install_weak_deps=False install make python3egg\(pip\) \
- && pip3 install cheetah3 \
+ && dnf --nogpgcheck --assumeyes --nodocs --setopt=install_weak_deps=False install make python3-cheetah \
  && dnf autoremove --assumeyes \
  && dnf clean all \
  && rm -rf /var/cache/dnf/* \
