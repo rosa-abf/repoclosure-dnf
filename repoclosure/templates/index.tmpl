@@ -40,5 +40,15 @@
   #end for
 #end def
 #def rightTitle()
-  <h5>Generated on $generated_on in $generated_in</h5>
+  <h5>Generated on <span id="generated_on">$generated_on_utc</span> in $generated_in</h5>
+  <script type="text/javascript">
+    !function(t) {
+      const f = document.querySelector("#generated_on")
+      const d = new Date(t)
+      const p = (e) => e.toString().padStart(2, '0')
+      const s = (n) => n >= 0 ? '+' : '-'
+      const o = -d.getTimezoneOffset() / 60
+      f.innerHTML = `\${d.getFullYear()}-\${p(d.getMonth() + 1)}-\${p(d.getDate())} \${p(d.getHours())}:\${p(d.getMinutes())}:\${p(d.getSeconds())}\${s(o)}\${p(o)}`
+    }($generated_on_ts)
+  </script>
 #end def
