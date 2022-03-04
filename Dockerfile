@@ -1,4 +1,4 @@
-FROM rosalab/rosa2019.1
+FROM rosalab/rosa2021.1
 
 RUN dnf --nogpgcheck --refresh --assumeyes --nodocs --setopt=install_weak_deps=False upgrade \
  && rm -f /etc/localtime \
