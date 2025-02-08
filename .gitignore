@@ -1,2 +1,6 @@
 config.json
 **/__pycache__
+repoclosure/templates/index.py
+repoclosure/templates/layout.py
+repoclosure/templates/repoclosure.py
+repoclosure/templates/compressed_repoclosure.py
