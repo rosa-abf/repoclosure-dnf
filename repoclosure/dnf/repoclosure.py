@@ -34,9 +34,14 @@ def generate_repoclosure_command(platform, repository, arch, type):
   cmd_parts.append('--setopt=metadata_expire=0 --disablerepo=*')
   repo_list = get_repo_list(platform, repository, arch, type)
   cmd_parts += ["--repofrompath=%s,%s --enablerepo=%s" % (name, url, name) for name, url in repo_list]
-  check_repo = '%s_%s-"%s"' % (repository, type, arch)
-  cmd_parts.append('repoclosure --check %s --arch "%s" --arch noarch \
-                    --forcearch "%s" --obsoletes --showduplicates -y' % (check_repo, arch, arch))
+  if arch.startswith('SRPMS+'):
+    check_repo = '%s_%s-"%s"' % (repository, type, 'SRPMS')
+  else:
+    check_repo = '%s_%s-"%s"' % (repository, type, arch)
+  cmd_parts.append('repoclosure --check %s' % (check_repo))
+  if not arch.startswith('SRPMS+'):
+    cmd_parts.append('--arch "%s" --arch noarch \
+                      --forcearch "%s" --obsoletes --showduplicates -y' % (arch, arch))
 
   return re.sub(r'\s+', ' ', ' '.join(cmd_parts))
 

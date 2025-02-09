@@ -24,6 +24,7 @@ class Config:
         for arch in platform['arches']:
           for type in platform['types']:
             yield platform, repository, arch, type
+            yield platform, repository, 'SRPMS+{}'.format(arch), type
 
   def output_path(self):
     return re.sub(r'\/+$', '', self.__json['output_path'])

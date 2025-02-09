@@ -1,11 +1,15 @@
 import re
 import subprocess
-from ..utils import get_repo_list
+from ..utils import get_repo_list, get_item
 
 def get_srpm_command(platform, repository, arch, type):
   cmd_parts = ["dnf -q --setopt=keepcache=False --setopt=reposdir=/dev/null",
                "--setopt=metadata_expire=0 --disablerepo=*"]
-  repo_name, repo_url = get_repo_list(platform, repository, arch, type, srpm_list = True)[0]
+
+  if arch.startswith('SRPMS+'):
+    arch = 'SRPMS'
+
+  repo_name, repo_url = get_item(platform, repository, arch, type)
   cmd_parts.append('--repofrompath=%s,%s --enablerepo=%s' % (repo_name, repo_url, repo_name))
   cmd_parts.append('repoquery --qf "%{name}-%{evr}.%{arch}#%{sourcerpm}" "*"')
 
@@ -28,7 +32,10 @@ def get_srpm_for_platform(platform, repository, arch, type):
       if sline == '':
         continue
       package, srpm = sline.split('#')
-      res[package] = srpm
+      if arch.startswith('SRPMS+'):
+        res[package] = package
+      else:
+        res[package] = srpm
     return res
   except Exception as e:
     return {
